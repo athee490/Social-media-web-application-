@@ -14,7 +14,7 @@ This project is a comprehensive social media platform that integrates fitness tr
   </div>
 
   <div style="width: 48%; text-align: center; margin-bottom: 20px;">
-    <img src="read/image2.png" alt="Feature 2" style="width: 50%; height: 50%; border: 1px solid #ddd; border-radius: 8px;">
+    <img src="read/image21.png" alt="Feature 2" style="width: 50%; height: 50%; border: 1px solid #ddd; border-radius: 8px;">
     <p style="font-weight: bold;">Feature 2</p>
   </div>
 
