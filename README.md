@@ -9,7 +9,7 @@ This project is a comprehensive social media platform that integrates fitness tr
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
 
   <div style="width: 48%; margin-bottom: 20px;">
-    <img src="read/image1.png" alt="Feature 1" style="width: 100%; border: 1px solid #ddd; border-radius: 8px;">
+    <img src="read/image1.png" alt="Feature 1" style="width: 50%; height:50%; border: 1px solid #ddd; border-radius: 8px;">
     <p style="text-align: center; font-weight: bold;">Feature 1</p>
   </div>
 
