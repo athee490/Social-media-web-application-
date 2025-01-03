@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Mohammad Sahragard">
+    <title>profile</title>
+    {% load static %}
+    <!-- import font icon (fontawesome) -->
+    <script src="https://kit.fontawesome.com/b8b432d7d3.js" crossorigin="anonymous"></script>
+    <!-- import css file (style.css) -->
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="profile-card">
+           
+            <nav class="navbar">
+
+                <a href="feed" class="navbar__button">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6368/6368360.png" alt="Icon" width="35" height="35">
+                  </a>
+                  <a href="map" class="navbar__button">
+                    <img src="https://static1.squarespace.com/static/59e8b9818dd041540ef28286/5a4d2a1371c10b82b8ead678/5a4d2a1453450a16cf477eb3/1515006764617/Icon_Active.png" alt="Icon" width="35" height="35">
+                  </a>
+          
+                <a href="prof" class="navbar__button">
+                  <img src="https://clipartspub.com/images/thunder-clipart-lightning-symbol-6.png" alt="Icon" width="35" height="35">
+                </a>
+                
+                <style>
+                .navbar {
+                   overflow: hidden;
+                   background-color: hsl(0, 0%, 100%);
+                   position: fixed;
+                   bottom: 0;
+                   width: 100%;
+                   height: 50px;
+                   justify-content: space-around;
+                   flex: 1 0 auto;
+                   display: flex;
+                   align-items: center;
+                   z-index: 1000; /* Ensures the navbar stays above all elements */
+                 }
+
+                      .navbar a {
+                        float: left;
+                        display: block;
+                        color: #f2f2f2;
+                        text-align: center;
+                        text-decoration: none;
+                        font-size: 17px;
+                        
+                        }
+                </style>
+                
+              </nav> 
+
+            <div class="profile-header"><!-- profile header section -->
+              <div class="main-profile">
+                <div class="profile-image">
+                  <img src="{{ profile.pic.url }}" style="width: 150px; height: 150px; center; background-size: cover; border-radius: 50%;border: 10px solid var(--primary-bg);">
+                </div>
+                <div class="profile-names">
+                    <h1 class="username">{{ user.username }}</h1>
+                    
+                </div>
+            </div>
+          </div>
+            <div class="profile-body"><!-- profile body section -->
+                <div class="profile-actions">
+                  <div id="follow-container">
+                    <button 
+                        id="follow-btn"
+                        data-url="{% url 'follow_user' user.username %}" 
+                        style="
+                            background: linear-gradient(90deg, #4caf50, #81c784); 
+                            border: none; 
+                            color: white; 
+                            padding: 10px 20px; 
+                            text-align: center; 
+                            text-decoration: none; 
+                            display: inline-block; 
+                            font-size: 16px; 
+                            font-weight: bold; 
+                            border-radius: 25px; 
+                            cursor: pointer; 
+                            transition: all 0.3s ease-in-out; 
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);"
+                    >
+                        {% if is_following %}
+                            Unfollow
+                        {% else %}
+                            Follow
+                        {% endif %}
+                    </button>
+                </div>
+                    
+                    </div>
+
+                    <div class="account-info" style="background-color: #fff; border-radius: 10px; padding: 15px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); width: 150%; max-width: 100px; margin: 20px auto;height: 200px;">
+                      <div class="data" style="display: flex; flex-direction: column; gap: 12px;">
+                           <div class="important-data" style="display: flex; flex-direction: column; gap: 10px;">
+                               <!-- Posts Section -->
+                               <section class="data-item" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+                                   <h3 class="value" style="font-size: 18px; font-weight: bold; color: #333;">{{ total_posts }}</h3>
+                                   <small class="title" style="font-size: 12px; color: #777;">Posts</small>
+                               </section>
+                               
+                               <!-- Followers Section -->
+                               <section class="data-item" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 8px;">
+                                   <h3 class="value" style="font-size: 18px; font-weight: bold; color: #333;">{{ followers }}</h3>
+                                   <a href="{% url 'following_list' user.username %}" style="font-size: 12px; color: #007bff; text-decoration: none; transition: color 0.3s;">
+                                       <small class="title">Following</small>
+                                   </a>
+                               </section>
+                               
+                               <!-- Following Section -->
+                               <section class="data-item" style="display: flex; justify-content: space-between; align-items: center;">
+                                   <h3 class="value" style="font-size: 18px; font-weight: bold; color: #333;">{{ following }}</h3>
+                                   <a href="{% url 'followers_list' user.username %}" style="font-size: 12px; color: #007bff; text-decoration: none; transition: color 0.3s;">
+                                       <small class="title">Followers</small>
+                                   </a>
+                               </section>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="posts" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin: 0 auto; width: 100%;">
+                    {% for post in posts_with_details %}
+                    <article class="post" style="width: 100%; max-width: none; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+                      <div class="post__content" style="padding: 15px;">
+                        <div class="post__medias" style="text-align: center;">
+                          {% if post.image %}
+                          <img
+                            class="post__media"
+                            src="{{ post.image }}"
+                            alt="Post Content"
+                            style="width: 100%; height: auto; object-fit: cover; border-radius: 8px;"
+                          />
+                          {% else %}
+                          <p style="color: #999; font-style: italic;">No image available</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="post__footer" style="padding: 15px; background: #f9f9f9;">
+                        <div class="post__infos" style="display: flex; justify-content: space-between; align-items: center;">
+                          
+                          <span class="post__date-time" style="color: #777; font-size: 14px;">{{ post.created_at|date:"F j, Y, g:i a" }}</span>
+                        </div>
+                      </div>
+                    </article>
+                    {% empty %}
+                    <p style="text-align: center; color: #999;">No posts to show.</p>
+                    {% endfor %}
+                  </div>
+ 
+                    </article>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const followBtn = document.getElementById("follow-btn");
+
+      followBtn.addEventListener("click", function () {
+          const url = this.dataset.url;
+
+          fetch(url, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRFToken": "{{ csrf_token }}",
+              },
+          })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      // Update the button text dynamically
+                      followBtn.textContent = data.is_following ? "Unfollow" : "Follow";
+                      // Optionally update followers count
+                      document.getElementById("followers-count").textContent = data.followers;
+                  } else {
+                      alert("An error occurred. Please try again.");
+                  }
+              })
+              .catch(error => {
+                  console.error("Error:", error);
+              });
+      });
+  });
+</script>
+
+</body>
+</html>

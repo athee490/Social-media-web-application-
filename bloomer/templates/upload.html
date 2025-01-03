@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Image</title>
+</head>
+<body>
+    
+    <input type="file" id="imageInput" accept="image/*">
+    <button id="uploadButton">Upload Image</button>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('#uploadButton').click(function(){
+                var fileInput = $('#imageInput')[0].files[0];
+                if (fileInput) {
+                    var formData = new FormData();
+                    formData.append('image', fileInput);
+                    $.ajax({
+                        url: 'upload/',
+                        method: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function(response) {
+                            console.log(response);
+                            alert(response.message);
+                        },
+                        error: function(xhr, errmsg, err) {
+                            console.log(xhr.status + ": " + xhr.responseText);
+                            alert('Error uploading image');
+                        }
+                    });
+                } else {
+                    alert('Please select an image');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Statistic Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'map.css' %}"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  </head>
+  <body>
+
+    <div class="main-layout">
+      <main class="main">
+        <div class="gg" id="map" style="height: 500px; width: 290px;">
+  
+          <script>
+            // Initialize the map
+            var map = L.map('map').setView([9.989887,77.354319], 13);
+            
+            // Add OpenStreetMap tile layer to the map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Locate the user and add a marker on the map
+            map.locate({setView: true, maxZoom: 16});
+            
+            // Event when location is found
+            map.on('locationfound', function(e) {
+              L.marker(e.latlng).addTo(map)
+                .bindPopup('You are here!').openPopup();
+            });
+            
+            // Event when location is not found
+            map.on('locationerror', function(e) {
+              alert(e.message);
+            });
+        
+            // icon -------------------------------------------------------
+           
+             
+        
+              
+        
+          </script>
+        
+          </div>
+          
+        <!-- Row 1 -->
+        <div class="row-1">
+          <div class="data">
+            <div class="important-data">
+                <section class="data-item">
+                    <h3 class="value">{{ today_steps }}</h3>
+                    <small class="title">steps</small>
+                </section>
+                <section class="data-item">
+                    <h3 class="value">well</h3>
+                    <small class="title">Done</small>
+                </section>
+                
+            </div>
+        </div>
+
+
+          <div class="box page-views">
+            <h2 class="box-title">weekly Goal</h2>
+            <div class="graph">
+              <div aria-label="66 page views" style="height: {{ percentages.monday|floatformat:2 }}%;"></div>
+              <div aria-label="18 page views" style="height: {{ percentages.tuesday|floatformat:2 }}%;"></div>
+              <div aria-label="34 page views" style="height:{{ percentages.wednesday|floatformat:2 }}%;"></div>
+              <div aria-label="75 page views" style="height: {{ percentages.thursday|floatformat:2 }}%;"></div>
+              <div aria-label="15 page views" style="height: {{ percentages.friday|floatformat:2 }}%;"></div>
+              <div aria-label="94 page views" style="height: {{ percentages.saturday|floatformat:2 }}%;"></div>
+              <div aria-label="95 page views" style="height: {{ percentages.sunday|floatformat:2 }}%;"></div>
+            </div>
+            
+          </div>
+        </div>
+        
+
+       
+
+        <!-- Row 4 - Devices -->
+        
+      </main>
+      
+    </div>
+    <nav class="navbar">
+
+      <a href="feed" class="navbar__button">
+          <img src=https://cdn-icons-png.flaticon.com/512/6368/6368360.png alt="Icon" width="35" height="35">
+        </a>
+        <a href="map" class="navbar__button">
+          <img src="https://static1.squarespace.com/static/59e8b9818dd041540ef28286/5a4d2a1371c10b82b8ead678/5a4d2a1453450a16cf477eb3/1515006764617/Icon_Active.png" alt="Icon" width="35" height="35">
+        </a>
+
+      <a href="prof" class="navbar__button">
+        <img src="https://clipartspub.com/images/thunder-clipart-lightning-symbol-6.png" alt="Icon" width="35" height="35">
+      </a>
+      
+      <style>
+      .navbar {
+         overflow: hidden;
+         background-color: hsl(0, 0%, 100%);
+         position: fixed;
+         bottom: 0;
+         width: 100%;
+         height: 50px;
+         justify-content: space-around;
+         flex: 1 0 auto;
+         display: flex;
+         align-items: center;
+       }
+
+            .navbar a {
+              float: left;
+              display: block;
+              color: #f2f2f2;
+              text-align: center;
+              text-decoration: none;
+              font-size: 17px;
+              
+              }
+      </style>
+      
+    </nav> 
+    
+
+    <script src="{% static 'map.js' %}"></script>
+  </body>
+</html>

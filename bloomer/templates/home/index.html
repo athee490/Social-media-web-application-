@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>bloomer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}"/>
+    <script src="{% static 'home.js' %}" defer></script>
+   
+  </head>
+
+  <body>
+     
+    <nav class="navbar">
+
+      <a href="" class="navbar__button">
+          <img src="https://cdn-icons-png.flaticon.com/512/6368/6368360.png" alt="Icon" width="35" height="35">
+        </a>
+        <a href="map" class="navbar__button">
+          <img src="https://static1.squarespace.com/static/59e8b9818dd041540ef28286/5a4d2a1371c10b82b8ead678/5a4d2a1453450a16cf477eb3/1515006764617/Icon_Active.png" alt="Icon" width="35" height="35">
+        </a>
+
+      <a href="prof" class="navbar__button">
+        <img src="https://clipartspub.com/images/thunder-clipart-lightning-symbol-6.png" alt="Icon" width="35" height="35">
+      </a>
+      
+      <style>
+      .navbar {
+         overflow: hidden;
+         background-color: hsl(0, 0%, 100%);
+         position: fixed;
+         bottom: 0;
+         width: 100%;
+         height: 50px;
+         justify-content: space-around;
+         flex: 1 0 auto;
+         display: flex;
+         align-items: center;
+       }
+
+            .navbar a {
+              float: left;
+              display: block;
+              color: #f2f2f2;
+              text-align: center;
+              text-decoration: none;
+              font-size: 17px;
+              
+              }
+      </style>
+      
+    </nav> 
+
+    <header class="header">
+      <nav class="header__content">
+        <div class="header__buttons">
+          <a href="index.html" class="header__home">
+            <img src="static/images/logo.png" alt="Icon" width="170" height="40">
+          </a>
+
+          <button class="header__theme-button" title="Toggle Theme">
+            <svg
+              class="header__theme-button-moon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="var(--text-dark)"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"
+              />
+            </svg>
+            <svg
+              class="header__theme-button-sun"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="var(--text-dark)"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+              />
+            </svg>
+          </button>
+        </div>
+
+
+      
+        <div class="header__buttons header__buttons--desktop">
+          <button class="profile-button">
+            <div class="profile-button__border"></div>
+            <div class="profile-button__picture">
+              <img src="assets/default-user.png" alt="User Picture" />
+            </div>
+          </button>
+        </div>
+
+
+       
+      </nav>
+    </header>
+    <main class="main-container">
+        <section class="content-container">
+          <div class="content">
+            <div class="stories">
+              <button class="stories__left-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="#fff"
+                    d="M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"
+                  ></path>
+                </svg>
+              </button>
+              
+              <div class="stories__content">
+                
+                <button class="story story--has-story">
+                  <div class="story__avatar">
+                    <div class="story__border">
+                      <svg
+                        width="64"
+                        height="64"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle r="31" cy="32" cx="32" />
+                        <defs>
+                          <linearGradient
+                            y2="0"
+                            x2="1"
+                            y1="1"
+                            x1="0"
+                            id="--story-gradient"
+                          >
+                            <stop offset="0" stop-color="#f09433" />
+                            <stop offset="0.25" stop-color="#e6683c" />
+                            <stop offset="0.5" stop-color="#dc2743" />
+                            <stop offset="0.75" stop-color="#cc2366" />
+                            <stop offset="1" stop-color="#bc1888" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+                    {% for followed_user in following_with_profiles %}
+                    <a href="{% url 'user_posts' username=followed_user.username %}">
+
+                    <div class="story__picture">
+                      <img src="{{ followed_user.profile }}"  />
+                    
+                    </div>
+                  </div>
+                  </a>
+                  <span class="story__user">{{ followed_user.username }}</span>
+                </button>
+                
+                
+                
+                
+                
+                
+              <button class="stories__right-button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path
+                    fill="#fff"
+                    d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"
+                  ></path>
+                </svg>
+              </button>
+              {% empty %}
+                  <p>{{ user.username }} is not following anyone.</p>
+              {% endfor %}
+            </div>
+    
+            <div class="posts" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin: 0 auto; width: 100%; max-width: 800px;">
+              {% for post in posts_with_details %}
+              <div class="post__header" style="display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                  <div class="post__profile" style="display: flex; align-items: center; gap: 10px;">
+                      <a  target="blank" class="post_avatar" style="display: flex; align-items: center;">
+                        {% if post.pic %}
+                          <img src="{{ post.pic }}" alt="User Picture" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;"/>
+                          {% else %}
+                              <p>No profile picture</p>
+                          {% endif %}
+                      </a>
+                      <a href="{% url 'user_posts' post.username %}">
+                      <h6 style="margin: 0; font-size: 16px; color: #333;">{{ post.username }}</h6>
+                    </a>
+                  </div>
+              </div>
+          
+              <article class="post" style="width: 100%; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                  <div class="post__content" style="padding: 10px;">
+                      <div class="post__medias" style="text-align: center;">
+                       
+                          {% if post.image %}
+                          <img
+                              class="post__media"
+                              src="{{ post.image }}"
+                              alt="Post Content"
+                              style="width: 100%; height: auto; border-radius: 8px;"
+                          />
+                          {% else %}
+                          <p style="color: #999; font-style: italic;">No image available</p>
+                          {% endif %}
+                      </div>
+                  </div>
+                  <div class="post__footer" style="padding: 10px; background: #f9f9f9;">
+                      <div class="post__infos" style="display: flex; justify-content: space-between; align-items: center;">
+                          
+                          <span class="post__date-time" style="color: #777; font-size: 12px;">{{ post.created_at|date:"F j, Y, g:i a" }}</span>
+                      </div>
+                  </div>
+              </article>
+              {% empty %}
+              <p style="text-align: center; color: #999;">No posts to show.</p>
+              {% endfor %}
+          </div>
+                </article>
+              </div>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+</body>
+</html>

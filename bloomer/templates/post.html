@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload with Different Views</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+    body {
+      background: #f4f6f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .parent {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .wrapper {
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      max-width: 500px;
+    }
+    header {
+      font-size: 24px;
+      font-weight: 600;
+      color: #4a90e2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      border: 2px dashed #4a90e2;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    form:hover {
+      background-color: #f0f8ff;
+    }
+    .file-input {
+      display: none;
+    }
+    i {
+      font-size: 48px;
+      color: #4a90e2;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      font-weight: 500;
+      color: #555;
+    }
+    .back {
+      width: 100%;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .back a {
+      text-decoration: none;
+    }
+    .back1 {
+      background: #4a90e2;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .back1:hover {
+      background: #357abd;
+    }
+    .progress-area, .uploaded-area {
+      margin-top: 15px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .progress-bar {
+      width: 100%;
+      background: #e0e0e0;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 5px;
+    }
+    .progress {
+      height: 8px;
+      background: #4a90e2;
+      width: 0;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="back">
+    <a href="prof"><button class="back1"><i class="fas fa-arrow-left"></i> Back</button></a>
+  </div>
+  
+  <div class="parent">
+    <div class="wrapper">
+      <header>Upload Files</header>
+      <form id="form-left" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="file-input" type="file" name="file">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Browse File to Upload</p>
+      </form>
+      <div class="progress-area"></div>
+      <div class="uploaded-area"></div>
+    </div>
+    
+    <div class="wrapper">
+      <header>Set Profile Picture</header>
+      <form id="form-right" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="file-input" type="file" name="file">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Browse File to Upload</p>
+      </form>
+      <div class="progress-area"></div>
+      <div class="uploaded-area"></div>
+    </div>
+  </div>
+  <script>
+    // Function to get CSRF Token
+    function getCSRFToken() {
+      const cookieValue = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('csrftoken='))
+        ?.split('=')[1];
+      return cookieValue;
+    }
+  
+    // Left section file upload (targeting 'uploadfile1' view)
+    const formLeft = document.querySelector("#form-left"),
+      fileInputLeft = document.querySelector(".file-input"),
+      progressAreaLeft = document.querySelector(".progress-area"),
+      uploadedAreaLeft = document.querySelector(".uploaded-area");
+  
+    formLeft.addEventListener("click", () => {
+      fileInputLeft.click();
+    });
+  
+    fileInputLeft.onchange = ({ target }) => {
+      let file = target.files[0];
+      if (file) {
+        let fileName = file.name;
+        if (fileName.length >= 12) {
+          let splitName = fileName.split('.');
+          fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+        }
+        uploadFileToLeftView(file, fileName, progressAreaLeft, uploadedAreaLeft);
+      }
+    };
+  
+    // Right section file upload (targeting 'uploadfile2' view)
+    const formRight = document.querySelector("#form-right"),
+      fileInputRight = document.querySelector(".file-input-right"),
+      progressAreaRight = document.querySelector(".progress-area-right"),
+      uploadedAreaRight = document.querySelector(".uploaded-area-right");
+  
+    formRight.addEventListener("click", () => {
+      fileInputRight.click();
+    });
+  
+    fileInputRight.onchange = ({ target }) => {
+      let file = target.files[0];
+      if (file) {
+        let fileName = file.name;
+        if (fileName.length >= 12) {
+          let splitName = fileName.split('.');
+          fileName = splitName[0].substring(0, 13) + "... ." + splitName[1];
+        }
+        uploadFileToRightView(file, fileName, progressAreaRight, uploadedAreaRight);
+      }
+    };
+  
+    // Function for Left view upload
+    function uploadFileToLeftView(file, name, progressArea, uploadedArea) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/upload");  // Targeting the 'uploadfile1' view
+  
+      // Add CSRF token to the request header
+      xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+  
+      // Track upload progress
+      xhr.upload.addEventListener("progress", ({ loaded, total }) => {
+        let fileLoaded = Math.floor((loaded / total) * 100);
+        let fileTotal = Math.floor(total / 1000);
+        let fileSize = (fileTotal < 1024) ? fileTotal + " KB" : (loaded / (1024 * 1024)).toFixed(2) + " MB";
+  
+        let progressHTML = `<li class="row">
+                              <i class="fas fa-file-alt"></i>
+                              <div class="content">
+                                <div class="details">
+                                  <span class="name">${name} • Uploading</span>
+                                  <span class="percent">${fileLoaded}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                  <div class="progress" style="width: ${fileLoaded}%"></div>
+                                </div>
+                              </div>
+                            </li>`;
+        uploadedArea.classList.add("onprogress");
+        progressArea.innerHTML = progressHTML;
+  
+        // When upload is complete
+        if (loaded === total) {
+          progressArea.innerHTML = "";
+          let uploadedHTML = `<li class="row">
+                                <div class="content upload">
+                                  <i class="fas fa-file-alt"></i>
+                                  <div class="details">
+                                    <span class="name">${name} • Uploaded</span>
+                                    <span class="size">${fileSize}</span>
+                                  </div>
+                                </div>
+                                <i class="fas fa-check"></i>
+                              </li>`;
+          uploadedArea.classList.remove("onprogress");
+          uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+        }
+      });
+  
+      let formData = new FormData();
+      formData.append("image", file);
+      xhr.send(formData);
+    }
+  
+    // Function for Right view upload
+    function uploadFileToRightView(file, name, progressArea, uploadedArea) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "/upload1");  // Targeting the 'uploadfile2' view
+  
+      // Add CSRF token to the request header
+      xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+  
+      // Track upload progress
+      xhr.upload.addEventListener("progress", ({ loaded, total }) => {
+        let fileLoaded = Math.floor((loaded / total) * 100);
+        let fileTotal = Math.floor(total / 1000);
+        let fileSize = (fileTotal < 1024) ? fileTotal + " KB" : (loaded / (1024 * 1024)).toFixed(2) + " MB";
+  
+        let progressHTML = `<li class="row">
+                              <i class="fas fa-file-alt"></i>
+                              <div class="content">
+                                <div class="details">
+                                  <span class="name">${name} • Uploading</span>
+                                  <span class="percent">${fileLoaded}%</span>
+                                </div>
+                                <div class="progress-bar">
+                                  <div class="progress" style="width: ${fileLoaded}%"></div>
+                                </div>
+                              </div>
+                            </li>`;
+        uploadedArea.classList.add("onprogress");
+        progressArea.innerHTML = progressHTML;
+  
+        // When upload is complete
+        if (loaded === total) {
+          progressArea.innerHTML = "";
+          let uploadedHTML = `<li class="row">
+                                <div class="content upload">
+                                  <i class="fas fa-file-alt"></i>
+                                  <div class="details">
+                                    <span class="name">${name} • Uploaded</span>
+                                    <span class="size">${fileSize}</span>
+                                  </div>
+                                </div>
+                                <i class="fas fa-check"></i>
+                              </li>`;
+          uploadedArea.classList.remove("onprogress");
+          uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+        }
+      });
+  
+      let formData = new FormData();
+      formData.append("pic", file);
+      xhr.send(formData);
+    }
+  </script>
+</body>
+</html>
